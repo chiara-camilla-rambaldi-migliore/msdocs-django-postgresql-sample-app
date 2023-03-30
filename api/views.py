@@ -49,3 +49,17 @@ def addItem(request: HttpRequest):
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
+
+@api_view(['POST'])
+def addUser(request: HttpRequest):
+    serializer = UserSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addTransform(request: HttpRequest):
+    serializer = TransformSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
