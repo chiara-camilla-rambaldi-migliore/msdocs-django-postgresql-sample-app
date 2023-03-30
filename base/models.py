@@ -12,7 +12,7 @@ class Transform(models.Model):
     transform = models.JSONField()
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
 
-class Image(models.Model):
+class ImageCollection(models.Model):
     images = models.JSONField()
     userId = models.ForeignKey(User, on_delete=models.CASCADE)
     transformId = models.ForeignKey(Transform, on_delete=models.CASCADE)

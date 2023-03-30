@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from base.models import Item, User, Transform, Image
+from base.models import Item, User, Transform, ImageCollection
 
 class ItemSerializer(serializers.ModelSerializer):
     class Meta:
@@ -17,7 +17,7 @@ class TransformSerializer(serializers.ModelSerializer):
         model = Transform
         fields = '__all__'
 
-class ImageSerializer(serializers.ModelSerializer):
+class ImageCollectionSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Image
+        model = ImageCollection
         fields = '__all__'

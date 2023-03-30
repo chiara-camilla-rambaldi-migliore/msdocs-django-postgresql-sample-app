@@ -1,8 +1,8 @@
 from rest_framework.response import Response
 from rest_framework.request import HttpRequest
 from rest_framework.decorators import api_view
-from base.models import Item, Transform, User, Image
-from .serializers import ItemSerializer, TransformSerializer, UserSerializer, ImageSerializer
+from base.models import Item, Transform, User, ImageCollection
+from .serializers import ItemSerializer, TransformSerializer, UserSerializer, ImageCollectionSerializer
 
 @api_view(['GET'])
 def getData(request):
@@ -21,16 +21,16 @@ def getTransforms(request: HttpRequest):
     return Response(serializer.data)
 
 @api_view(['GET'])
-def getImages(request: HttpRequest):
+def getImageCollections(request: HttpRequest):
     user = request.GET.get('user', '')
     transform = request.GET.get('transform', '')
     if user == '' and transform == '':
-        items = Image.objects.all()
+        items = ImageCollection.objects.all()
     elif transform == '':
-        items = Image.objects.get(userId=user)
+        items = ImageCollection.objects.get(userId=user)
     else:
-        items = Image.objects.get(userId=user, transformId=transform)
-    serializer = ImageSerializer(items, many=hasattr(items, '__iter__'))
+        items = ImageCollection.objects.get(userId=user, transformId=transform)
+    serializer = ImageCollectionSerializer(items, many=hasattr(items, '__iter__'))
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -60,6 +60,13 @@ def addUser(request: HttpRequest):
 @api_view(['POST'])
 def addTransform(request: HttpRequest):
     serializer = TransformSerializer(data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+    return Response(serializer.data)
+
+@api_view(['POST'])
+def addImageCollection(request: HttpRequest):
+    serializer = ImageCollectionSerializer(data = request.data)
     if serializer.is_valid():
         serializer.save()
     return Response(serializer.data)
