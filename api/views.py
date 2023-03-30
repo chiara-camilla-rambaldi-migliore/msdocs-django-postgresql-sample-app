@@ -17,7 +17,7 @@ def getTransforms(request: HttpRequest):
         items = Transform.objects.all()
     else:
         items = Transform.objects.get(userId=user)
-    serializer = TransformSerializer(items, many=True)
+    serializer = TransformSerializer(items, many=hasattr(items, '__iter__'))
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -30,7 +30,7 @@ def getImages(request: HttpRequest):
         items = Image.objects.get(userId=user)
     else:
         items = Image.objects.get(userId=user, transformId=transform)
-    serializer = ImageSerializer(items, many=True)
+    serializer = ImageSerializer(items, many=hasattr(items, '__iter__'))
     return Response(serializer.data)
 
 @api_view(['GET'])
@@ -40,7 +40,7 @@ def getUsers(request: HttpRequest):
         items = User.objects.all()
     else:
         items = User.objects.get(id=id)
-    serializer = UserSerializer(items, many=True)
+    serializer = UserSerializer(items, many=hasattr(items, '__iter__'))
     return Response(serializer.data)
 
 @api_view(['POST'])
